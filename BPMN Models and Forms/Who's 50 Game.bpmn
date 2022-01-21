@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0rbumvm" targetNamespace="http://bpmn.io/schema/bpmn" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="1.2.0">
+  <bpmn:process id="camunda-who-50-example" name="Play &#34;Who&#39;s 50&#34;" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Play &#34;Who&#39;s 50&#34;">
+      <bpmn:outgoing>Flow_0on84zi</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0on84zi" sourceRef="StartEvent_1" targetRef="Activity_1tpxhpd" />
+    <bpmn:sequenceFlow id="Flow_099589h" sourceRef="Activity_1tpxhpd" targetRef="Activity_1tx36wp" />
+    <bpmn:userTask id="Activity_1tpxhpd" name="Enter a Celebrity Name">
+      <bpmn:incoming>Flow_0on84zi</bpmn:incoming>
+      <bpmn:incoming>Flow_0qv3yi3</bpmn:incoming>
+      <bpmn:incoming>Flow_0iw31a6</bpmn:incoming>
+      <bpmn:outgoing>Flow_099589h</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0r3gg6h" sourceRef="Activity_1tx36wp" targetRef="Gateway_044ged5" />
+    <bpmn:serviceTask id="Activity_1tx36wp" name="Check Celeb">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="CheckCelebAge" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_099589h</bpmn:incoming>
+      <bpmn:outgoing>Flow_0r3gg6h</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_044ged5" name="What age is the Celeb" default="Flow_0iw31a6">
+      <bpmn:incoming>Flow_0r3gg6h</bpmn:incoming>
+      <bpmn:outgoing>Flow_1aiv53r</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0iw31a6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1aiv53r" name="Age is 50" sourceRef="Gateway_044ged5" targetRef="Activity_153sfv1">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= age == 50</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_0cs73z7" name="You win!">
+      <bpmn:incoming>Flow_0kj5kav</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0kj5kav" sourceRef="Activity_153sfv1" targetRef="Event_0cs73z7" />
+    <bpmn:boundaryEvent id="Event_09jj3wy" name="Celeb&#10;Not found" attachedToRef="Activity_1tx36wp">
+      <bpmn:outgoing>Flow_0qv3yi3</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0fqy7xz" errorRef="Error_0zlwhdr" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0qv3yi3" sourceRef="Event_09jj3wy" targetRef="Activity_1tpxhpd" />
+    <bpmn:userTask id="Activity_153sfv1" name="Check Details">
+      <bpmn:incoming>Flow_1aiv53r</bpmn:incoming>
+      <bpmn:outgoing>Flow_0kj5kav</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0iw31a6" sourceRef="Gateway_044ged5" targetRef="Activity_1tpxhpd" />
+  </bpmn:process>
+  <bpmn:error id="Error_0892ucz" name="NO_REPO_FOUND" errorCode="NO_REPO_FOUND" />
+  <bpmn:error id="Error_0zlwhdr" name="Celeb_not_found" errorCode="Celeb_not_found" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="camunda-who-50-example">
+      <bpmndi:BPMNEdge id="Flow_0on84zi_di" bpmnElement="Flow_0on84zi">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_099589h_di" bpmnElement="Flow_099589h">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="420" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0r3gg6h_di" bpmnElement="Flow_0r3gg6h">
+        <di:waypoint x="520" y="177" />
+        <di:waypoint x="575" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1aiv53r_di" bpmnElement="Flow_1aiv53r">
+        <di:waypoint x="625" y="177" />
+        <di:waypoint x="710" y="177" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="645" y="133" width="47" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kj5kav_di" bpmnElement="Flow_0kj5kav">
+        <di:waypoint x="810" y="177" />
+        <di:waypoint x="878" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qv3yi3_di" bpmnElement="Flow_0qv3yi3">
+        <di:waypoint x="500" y="235" />
+        <di:waypoint x="500" y="320" />
+        <di:waypoint x="320" y="320" />
+        <di:waypoint x="320" y="217" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0iw31a6_di" bpmnElement="Flow_0iw31a6">
+        <di:waypoint x="600" y="152" />
+        <di:waypoint x="600" y="50" />
+        <di:waypoint x="320" y="50" />
+        <di:waypoint x="320" y="137" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="159" y="202" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nnb19q_di" bpmnElement="Activity_1tpxhpd">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1egwgwu_di" bpmnElement="Activity_1tx36wp">
+        <dc:Bounds x="420" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_044ged5_di" bpmnElement="Gateway_044ged5" isMarkerVisible="true">
+        <dc:Bounds x="575" y="152" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="602" y="202" width="76" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0cs73z7_di" bpmnElement="Event_0cs73z7">
+        <dc:Bounds x="878" y="159" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="875" y="202" width="43" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_07zrwlf_di" bpmnElement="Activity_153sfv1">
+        <dc:Bounds x="710" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0bnnp57_di" bpmnElement="Event_09jj3wy">
+        <dc:Bounds x="482" y="199" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="426" y="226" width="48" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

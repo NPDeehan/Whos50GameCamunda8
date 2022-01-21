@@ -1,0 +1,10 @@
+zeebe:
+  client:
+    cloud:
+      region: bru-2
+      clusterId: CLUSTER-ID
+      clientId: CLIENT-ID
+      clientSecret: CLIENT-SECRET
+
+celebrityninjas:
+  key: YOUR-API-KEY

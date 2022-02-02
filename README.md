@@ -16,7 +16,7 @@ Pop along to camunda.io and create a Camunda Cloud account. You'll need to creat
 You can [download it here](https://camunda.com/download/modeler/) for all the usual platforms. 
 
 ### Celebrity Ninja API Key
-For this you just need to create a free account on [API Ninjas](https://api-ninjas.com/) and generate a key that you need to add to the `application.yml` file. Which is in the `src/main/resources/` 
+For this you just need to create a free account on [Celebrity Ninjas](https://celebrityninjas.com/) and generate a key that you need to add to the `application.yml` file. Which is in the `src/main/resources/` 
 
 ```yaml
 celebrityninjas:

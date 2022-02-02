@@ -29,28 +29,36 @@ public class Worker {
         try {
             System.out.println("Going to check age for "+ celebName);
             CelebDetails celebDetails = checkAge.getCelebDetails(celebName);
-            celebName = celebDetails.name;
 
-            int celebAge = celebDetails.age;
-            HashMap<String, Object> variables = new HashMap<>();
-            variables.put("age", celebAge);
-            variables.put("celebName", celebName);
-            variables.put("response", celebName + " is " + celebAge +" Years old");
+            if(celebDetails != null) {
+                celebName = celebDetails.name;
 
-            System.out.println(celebName + " is " + celebAge +" Years old");
+                int celebAge = celebDetails.age;
+                HashMap<String, Object> variables = new HashMap<>();
+                variables.put("age", celebAge);
+                variables.put("celebName", celebName);
+                variables.put("response", celebName + " is " + celebAge + " Years old");
 
-            client.newCompleteCommand(job.getKey())
-                    .variables(variables)
-                    .send()
-                    .exceptionally((throwable -> {
-                        throw new RuntimeException("Could not complete job", throwable);
-                    }));
+                System.out.println(celebName + " is " + celebAge + " Years old");
 
+                client.newCompleteCommand(job.getKey())
+                        .variables(variables)
+                        .send()
+                        .exceptionally((throwable -> {
+                            throw new RuntimeException("Could not complete job", throwable);
+                        }));
+            }else {
+                client.newThrowErrorCommand(job.getKey())
+                        .errorCode("Celeb_not_found")
+                        .errorMessage("I wasn't able to find that celeb")
+                        .send()
+                        .exceptionally((throwable -> {
+                            throw new RuntimeException("Could not throw the BPMN Error Event", throwable);
+                        }));
+            }
         }catch(Exception e){
             e.printStackTrace();
             client.newFailCommand(job.getKey());
         }
-
     }
-
 }

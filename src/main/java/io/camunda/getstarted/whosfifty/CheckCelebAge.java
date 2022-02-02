@@ -25,9 +25,6 @@ public class CheckCelebAge {
 
     }
 
-
-
-
     public CelebDetails getCelebDetails(String celebName) throws Exception {
         System.out.println("Making call for "+celebName);
         HttpResponse<String> response = get("https://api.celebrityninjas.com/v1/search?limit=10&name=" + celebName );
@@ -42,18 +39,24 @@ public class CheckCelebAge {
 
             //Get the first celeb returned from the call
             JSONArray body = new JSONArray(response.body());
-            String firstCelebFound = body.getJSONObject(0).toString();
 
-            // Map the celeb to a local object
-            ObjectMapper om = new ObjectMapper();
-            CelebDetails celebDetails = om.readValue(firstCelebFound, CelebDetails.class);
+            //
+            if (body.isNull(0)){
+                return null;
+            }else {
+                String firstCelebFound = body.getJSONObject(0).toString();
 
-            return celebDetails;
+                // Map the celeb to a local object
+                ObjectMapper om = new ObjectMapper();
+                CelebDetails celebDetails = om.readValue(firstCelebFound, CelebDetails.class);
+                System.out.println(celebDetails.toString());
+                return celebDetails;
+            }
 
         }
     }
 
-    public HttpResponse<String> get(String uri) throws Exception {
+    private HttpResponse<String> get(String uri) throws Exception {
 
         uri = uri.replace(" ", "+");
 

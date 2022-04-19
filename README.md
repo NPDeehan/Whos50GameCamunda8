@@ -1,4 +1,4 @@
-# Who's 50 Game for Camunda Cloud
+# Who's 50 Game for Camunda Platform 8
 
 To play the game "Who's 50," name someone famous. If they're exactly 50 years old, you win the game! If they're any other age, guess again.
 

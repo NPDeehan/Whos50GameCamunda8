@@ -2,7 +2,7 @@
 
 To play the game "Who's 50," name someone famous. If they're exactly 50 years old, you win the game! If they're any other age, guess again.
 
-We've turned this game into a Camunda Cloud application consisting of three parts: a BPMN 2.0 model, a couple of user forms, and a Java microservice.
+We've turned this game into a Camunda Platform 8 application consisting of three parts: a BPMN 2.0 model, a couple of user forms, and a Java microservice.
 
 You can follow the link below to watch a video stepping through the project.
 [![NiallCloudExample](https://img.youtube.com/vi/oRzpTUN2l6I/0.jpg)](https://youtu.be/oRzpTUN2l6I)

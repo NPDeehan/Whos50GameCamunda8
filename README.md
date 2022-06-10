@@ -19,9 +19,9 @@ Visit camunda.io and create a Camunda Cloud account. You'll also need to create 
 
 Download [Camunda Desktop Modeler](https://camunda.com/download/modeler/) for all the usual platforms.
 
-### Celebrity Ninjas API key
+### API Ninjas key
 
-Create a free account on [Celebrity Ninjas](https://celebrityninjas.com/) and generate an API key. Save this API key so you can apply it to your project in the steps ahead.
+Create a free account on [API Ninjas](https://api-ninjas.com/) and generate an API key. Save this API key so you can apply it to your project in the steps ahead.
 
 ### Cloned repository
 
@@ -35,9 +35,9 @@ Set up this microservice by taking the steps below:
 
 1. Navigate to your preferred IDE and open the cloned repository.
 2. Within the repo, open up the `application.yml` file in `src/main/resources/`.
-3. Add your generated Celebrity Ninjas API key to the designated line in `applications.yml`.
+3. Add your generated API Ninjas key to the designated line in `applications.yml`.
 ```yaml
-celebrityninjas:
+api-ninjas:
   key: YourKeyGoesHere
 ```
 4. Add your Camunda Cloud API details to the `application.yaml` file. Follow our guidance on [getting the API details](https://docs.camunda.io/docs/guides/getting-started/setup-client-connection-credentials/) for assistance.

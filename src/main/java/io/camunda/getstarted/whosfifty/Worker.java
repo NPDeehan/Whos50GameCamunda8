@@ -37,6 +37,7 @@ public class Worker {
                 HashMap<String, Object> variables = new HashMap<>();
                 variables.put("age", celebAge);
                 variables.put("celebName", celebName);
+                variables.put("birthday", celebDetails.birthday);
                 variables.put("response", celebName + " is " + celebAge + " Years old");
 
                 System.out.println(celebName + " is " + celebAge + " Years old");
@@ -47,7 +48,7 @@ public class Worker {
                         .exceptionally((throwable -> {
                             throw new RuntimeException("Could not complete job", throwable);
                         }));
-            }else {
+            } else {
                 client.newThrowErrorCommand(job.getKey())
                         .errorCode("Celeb_not_found")
                         .errorMessage("I wasn't able to find that celeb")
@@ -56,9 +57,13 @@ public class Worker {
                             throw new RuntimeException("Could not throw the BPMN Error Event", throwable);
                         }));
             }
-        }catch(Exception e){
+        } catch(Exception e) {
+            int retries = job.getRetries() - 1;
+
             e.printStackTrace();
-            client.newFailCommand(job.getKey());
+            client.newFailCommand(job.getKey())
+                .retries(retries)
+                .send();
         }
     }
 }

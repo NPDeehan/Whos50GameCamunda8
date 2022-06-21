@@ -18,7 +18,7 @@ public class CelebDetails {
     @JsonProperty("height")
     public double height;
 
-    @JsonProperty("birthday")
+    @JsonProperty("birthdy") // There's no typo here :)
     public String birthday;
 
     @JsonProperty("net_worth")
@@ -29,4 +29,7 @@ public class CelebDetails {
 
     @JsonProperty("occupation")
     public List<String> occupation;
+    
+    @JsonProperty("is_alive")
+    public boolean is_alive;
 }

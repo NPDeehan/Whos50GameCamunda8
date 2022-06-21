@@ -14,24 +14,23 @@ import java.net.http.HttpRequest;
 @Component
 public class CheckCelebAge {
 
-    public static String apiKey;
+    private static String apiKey;
 
-    @Value("${celebrityninjas.key}")
+    @Value("${api-ninjas.key}")
     public void setApiKey(String key){
         apiKey = key;
     }
 
-    public CheckCelebAge() {
-
-    }
+    public CheckCelebAge() {}
 
     public CelebDetails getCelebDetails(String celebName) throws Exception {
-        System.out.println("Making call for "+celebName);
-        HttpResponse<String> response = get("https://api.celebrityninjas.com/v1/search?limit=10&name=" + celebName );
+        String url = "https://api.api-ninjas.com/v1/celebrity?limit=10&name=" + celebName.replace(" ", "+");
+
+        HttpResponse<String> response = get(url);
 
         if (response.statusCode() != 200) {
 
-            // create incidence if Status code is not 200#
+            // create incident if Status code is not 200#
             System.out.println("Error Status Code: "+ response.statusCode());
             throw new Exception("Error from REST call, Response code: " + response.statusCode());
 
@@ -43,13 +42,12 @@ public class CheckCelebAge {
             //
             if (body.isNull(0)){
                 return null;
-            }else {
+            } else {
                 String firstCelebFound = body.getJSONObject(0).toString();
 
                 // Map the celeb to a local object
                 ObjectMapper om = new ObjectMapper();
                 CelebDetails celebDetails = om.readValue(firstCelebFound, CelebDetails.class);
-                System.out.println(celebDetails.toString());
                 return celebDetails;
             }
 
@@ -57,9 +55,6 @@ public class CheckCelebAge {
     }
 
     private HttpResponse<String> get(String uri) throws Exception {
-
-        uri = uri.replace(" ", "+");
-
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .header("X-Api-Key", apiKey)
@@ -67,11 +62,14 @@ public class CheckCelebAge {
                 .uri(URI.create(uri))
                 .build();
 
-        HttpResponse<String> response =
-                client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println("Fetching URI: " + uri);
+        HttpResponse<String> response = client
+            .send(request, HttpResponse.BodyHandlers.ofString());
 
+        System.out.println("Got status code: " + response.statusCode());
+        System.out.println("=== Body:");
         System.out.println(response.body());
-
+        System.out.println("=========");
         return response;
     }
 
